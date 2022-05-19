@@ -1,5 +1,6 @@
 import './App5.css';
 import Bala from './components/Bala';
+import Jura from './components/Jura';
 import Tvenkinys from './components/Tvenkinys';
 function App() {
   const seaPlaners = [
@@ -72,6 +73,7 @@ function App() {
         <Tvenkinys
           values={seaPlaners}
         />
+        <Jura values={seaPlaners} />
       </header>
     </div>
   );
