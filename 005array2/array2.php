@@ -166,21 +166,107 @@ echo '</pre>';
 ?>
 <h1> Uzduotis 7</h1>
 <?php
+$letters = range('a', 'z');
+
+foreach ($arr as $key => $value) {
+  $name = '';
+  $surname = '';
+  for ($i = 0; $i < rand(5, 15); $i++) {
+    $name .= $letters[rand(0, 25)];
+    $surname .= $letters[rand(0, 25)];
+  }
+  $arr[$key]['name'] = $name;
+  $arr[$key]['surname'] = $surname;
+}
+
+echo '<pre>';
+print_r($arr);
+echo '</pre>';
+
 
 ?>
 <h1> Uzduotis 8</h1>
 <?php
+$arr = [];
+for ($i = 0; $i < 10; $i++) {
+  $arrLength = rand(0, 5);
+  if ($arrLength > 0) {
+    for ($ii = 0; $ii < $arrLength; $ii++) {
+      $arr[$i][$ii] = rand(0, 10);
+    }
+  } else {
+    $arr[$i] = rand(0, 10);
+  }
+}
 
+echo '<pre>';
+print_r($arr);
+echo '</pre>';
 ?>
 <h1> Uzduotis 9</h1>
 <?php
+$arrSorted = [];
+foreach ($arr as $key => $value) {
+  if (is_array($value)) {
+    $arrSorted[$key] = array_sum($value);
+  } else {
+    $arrSorted[$key] = $value;
+  }
+}
+sort($arrSorted);
 
+echo '<pre>';
+print_r($arrSorted);
+echo '</pre>';
 ?>
 <h1> Uzduotis 10</h1>
 <?php
+$arr = [];
+$specSym = '#%+*@裡';
+// $specSym = '#%+*@';
+for ($i = 0; $i < 10; $i++) {
+  for ($ii = 0; $ii < 10; $ii++) {
 
+    $arr[$i][$ii]['value'] = $specSym[rand(0, strlen($specSym) - 1)];
+    $arr[$i][$ii]['color'] = '#' . rand(0, 999999);
+  }
+}
+
+foreach ($arr as $key => $inner) {
+  foreach ($inner as $value) {
+    echo "<span style='letter-spacing: 15px;font-size:20px;font-weight:500;color:" . $value['color'] . "'>";
+    echo $value['value'];
+    echo '</span>';
+  }
+  echo '<br>';
+}
 ?>
 <h1> Uzduotis 11</h1>
 <?php
+do {
+  $a = rand(0, 1000);
+  $b = rand(0, 1000);
+} while ($a == $b);
+$long = rand(10, 30);
+$sk1 = $sk2 = 0;
+echo '<h3>Skaičiai ' . $a . ' ir ' . $b . '</h3>';
+$c = [];
+for ($i = 0; $i < $long; $i++) {
+  $c[] = array_rand(array_flip([$a, $b]));
+}
+echo '<h4>Masyvas:</h4>';
+echo '<pre>';
+print_r($c);
+echo '</pre>';
 
+$min = min($c);
+$max = max($c);
+
+foreach ($c as $value) {;
+}
+
+$countValues = array_count_values($c);
+$sk1 = $countValues[$min];
+$sk2 = $countValues[$max];
+echo "<h3>Skaičius $min yra pakartotas " . $sk1 . " kartų, o skaičius $max - " . $sk2 . ' kartų.</h3>';
 ?>
