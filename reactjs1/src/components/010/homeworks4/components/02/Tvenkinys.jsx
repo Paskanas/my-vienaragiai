@@ -6,13 +6,13 @@ const Tvenkinys = (props) => {
     <>
       <Daiktas
         values={values}
-        color="red"
+        color="cyan"
         show={2}
       />
 
       <Daiktas
         values={values}
-        color="blue"
+        color="gold"
         show={1}
       />
     </>

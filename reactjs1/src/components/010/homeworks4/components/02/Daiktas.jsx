@@ -13,7 +13,8 @@ const Daiktas = (props) => {
   return showValues.map((value, i) => (
     <div
       style={{
-        color: props.color,
+        color: value.color,
+        backgroundColor: props.color,
       }}
       key={i}
     >

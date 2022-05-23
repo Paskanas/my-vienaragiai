@@ -1,7 +1,9 @@
 import './App5.css';
-import Bala from './components/Bala';
-import Jura from './components/Jura';
-import Tvenkinys from './components/Tvenkinys';
+import Bala from './components/01/Bala';
+import Jura from './components/03/Jura';
+import Tvenkinys from './components/02/Tvenkinys';
+import Vandenynas from './components/04/Vandenynas';
+import Pasaulis from './components/05/Pasaulis';
 function App() {
   const seaPlaners = [
     {
@@ -66,14 +68,25 @@ function App() {
     },
   ];
 
+  const pasaulisValues = seaPlaners;
   return (
     <div className="App">
       <header className="App-header">
         <Bala arr={seaPlaners} />
+        <br />
         <Tvenkinys
           values={seaPlaners}
         />
+        <br />
         <Jura values={seaPlaners} />
+        <br />
+        <Vandenynas
+          values={seaPlaners}
+        />
+        <br />
+        <Pasaulis
+          values={pasaulisValues}
+        />
       </header>
     </div>
   );

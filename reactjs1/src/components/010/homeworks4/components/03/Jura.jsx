@@ -23,7 +23,10 @@ const Jura = (props) => {
       <Sala values={salaValues} />
       {juraValues.map((value, i) => (
         <div
-          style={{ color: 'yellow' }}
+          style={{
+            color: value.color,
+            backgroundColor: 'cyan',
+          }}
           key={i}
         >
           {value.name}

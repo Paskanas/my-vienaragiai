@@ -2,7 +2,10 @@ const Laivas = (props) => {
   const values = props.values;
   return values.map((value, i) => (
     <div
-      style={{ color: 'blue' }}
+      style={{
+        color: value.color,
+        backgroundColor: 'cyan',
+      }}
       key={i}
     >
       {value.name}
