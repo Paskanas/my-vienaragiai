@@ -91,3 +91,130 @@ echo quarterOf(11);
 echo '<br>';
 echo quarterOf(12);
 echo '<br>';
+
+function squareOrSquareRoot($array)
+{
+  foreach ($array as &$value) {
+    echo sqrt($value);
+    echo '<br>';
+    echo '% ' . sqrt($value) % 1;
+    echo '<br>';
+    $sqrtValue = sqrt($value);
+    if (floor($sqrtValue) === $sqrtValue) {
+      $value = sqrt($value);
+    } else {
+      $value = $value ** 2;
+    }
+  }
+  return $array;
+}
+
+
+print_r(squareOrSquareRoot([4, 3, 9, 7, 2, 1]));
+
+echo '<br>';
+
+function twice_as_old($dad_years_old, $son_years_old)
+{
+  $counter = 0;
+  while (($dad_years_old !== $son_years_old * 2) && ($dad_years_old !== 0)) {
+    $dad_years_old--;
+    $counter++;
+    if ($counter > 30) {
+      break;
+    }
+  }
+  return $counter;
+}
+
+echo twice_as_old(36, 7);
+
+function square_sum($numbers): int
+{
+  $sum = 0;
+  foreach ($numbers as $number) {
+    $sum += $number ** 2;
+  }
+  return $sum;
+}
+
+echo '<br>';
+echo '<br>';
+echo square_sum([1, 2, 3, 4]);
+
+
+function getGrade($a, $b, $c)
+{
+  $avg = ($a + $b + $c) / 3;
+  if ($avg < 60) {
+    return 'F';
+  } else if ($avg < 70) {
+    return 'D';
+  } else if ($avg < 80) {
+    return 'C';
+  } else if ($avg < 90) {
+    return 'B';
+  } else if ($avg < 100) {
+    return 'A';
+  } else {
+    return 'aa';
+  }
+}
+
+echo getGrade(90, 95, 80);
+
+function minSum($arr)
+{
+  sort($arr);
+  print_r($arr);
+  $sum = 0;
+  for ($i = 0; $i < count($arr) - 1 / 2; $i++) {
+    $sum += $arr[$i] * $arr[count($arr) - 1 - $i];
+  }
+  return $sum;
+}
+
+echo minSum([1, 5, 8, 2, 3, 6]);
+
+function dont_give_me_five($start, $end)
+{
+  // echo $start;
+  // echo '<br>';
+  // echo $end;
+  // echo '<br>';
+  // echo '<br>';
+  $skirtumas = $end - $start + 1;
+  $counter = 0;
+  for ($i = $start; $i <= $end; $i++) {
+    if ($i % 5 === 0 && ($i / 5) % 2 !== 0) {
+      echo $i;
+      echo '<br>';
+      $counter++;
+    }
+    $a = $i;
+    // echo 'bb ' . substr($a, 0, 1);
+    // echo '<br>';
+    while (substr(abs($a), 0, 1) == 5 && abs($a) >= 50) {
+      echo 'a ' . $a;
+      echo '<br>';
+      if ($i % 5 === 0 && ($i / 5) % 2 !== 0) {
+        $counter--;
+      }
+      $counter++;
+      $a = $a - round($a, 10 * (strlen($a) - 1));
+      // echo 'aa ' . $a;
+      // echo '<br>';
+    }
+    // echo 'su ' . substr($i, 1);
+    // echo '<br>';
+  }
+  echo '<br>';
+  echo $skirtumas;
+  echo '<br>';
+  echo $counter;
+  echo '<br>';
+  return $skirtumas - $counter;
+}
+
+echo '<br>';
+echo dont_give_me_five(-60, 120);
