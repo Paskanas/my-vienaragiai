@@ -4,7 +4,7 @@ session_start();
 // print_r($_SERVER);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $_SESSION['color'] = 'gold';
-  header('Location: http://localhost/my-vienaragiai/012/homeworksNr7/?');
+  header('Location: http://localhost/my-vienaragiai/012/homeworksNr7/');
   exit;
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $color = $_SESSION ? $_SESSION['color'] : 'green';
@@ -24,10 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body style="background-color: <?php echo  $color ?>;">
-  <form action="" method="post">
+  <form action="" method="POST">
     <button type="submit">Submit</button>
   </form>
-  <form action="" method="get">
+  <form action="" method="GET">
     <button>Get</button>
   </form>
 </body>

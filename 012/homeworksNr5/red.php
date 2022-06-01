@@ -1,10 +1,8 @@
 <pre>
 <?php
-print_r($_SERVER);
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  // header('Location: http://localhost/my-vienaragiai/012/homeworksNr4/blue.php');
-  // $_SERVER['HTTP_REFERER'] = 'http://localhost/my-vienaragiai/012/homeworksNr4/blue.php';
-  // exit;
+if (isset($_GET['b'])) {
+  header('Location: http://localhost/my-vienaragiai/012/homeworksNr5/blue.php');
+  exit;
 }
 ?>
 </pre>
@@ -15,11 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Red</title>
 </head>
 
-<body>
-  <a href="http://localhost/my-vienaragiai/012/homeworksNr4/red.php">Nuoroda i save</a>
+<body style="background-color: red;">
+  <a href="http://localhost/my-vienaragiai/012/homeworksNr5/red.php?b=1">Blue</a>
 </body>
 
 </html>

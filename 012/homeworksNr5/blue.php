@@ -1,10 +1,9 @@
 <pre>
 <?php
-print_r($_SERVER);
-// if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-//   header('Location: http://localhost/my-vienaragiai/012/homeworksNr4/red.php');
-//   // exit;
-// }
+if (isset($_GET['r'])) {
+  header('Location: http://localhost/my-vienaragiai/012/homeworksNr5/red.php');
+  exit;
+}
 ?>
 </pre>
 <!DOCTYPE html>
@@ -14,11 +13,11 @@ print_r($_SERVER);
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Blue</title>
 </head>
 
-<body>
-  <a href="http://localhost/my-vienaragiai/012/homeworksNr4/blue.php">Nuoroda i save</a>
+<body style="background-color: blue;">
+  <a href="http://localhost/my-vienaragiai/012/homeworksNr5/blue.php?r=1">Red</a>
 </body>
 
 </html>

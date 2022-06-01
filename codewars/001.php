@@ -218,3 +218,83 @@ function dont_give_me_five($start, $end)
 
 echo '<br>';
 echo dont_give_me_five(-60, 120);
+
+
+echo '<br>';
+echo '<br>';
+echo substr(39207311414, 3, 2);
+echo '<br>';
+if (substr(39207311414, 3, 2) < 12) {
+  echo 'Ok';
+} else {
+  echo 'Not ok';
+}
+$identityCode = 39207311465;
+echo '<br>';
+
+echo strlen(123456);
+echo '<br>';
+
+echo strval($identityCode)[0];
+echo '<br>';
+
+if (strval($identityCode)[0] == 3 || strval($identityCode)[0] == 4) {
+  echo 'good';
+} else {
+  echo 'Bad';
+}
+echo '<br>';
+echo '<br>';
+
+$controlNumberCounter = 1;
+$controlNumber = 0;
+foreach (str_split($identityCode) as $key => $value) {
+  if ($key !== 10) {
+    if ($controlNumberCounter === 10) {
+      $controlNumberCounter = 1;
+    }
+    echo '$controlNumberCounter ' . $controlNumberCounter;
+    echo '<br>';
+    $controlNumber += intval($value) * $controlNumberCounter;
+    $controlNumberCounter++;
+    echo '$controlNumber ' . $controlNumber;
+    echo '<br>';
+  }
+}
+echo '$controlNumber % 11 ' . $controlNumber % 11;
+echo '<br>';
+if ($controlNumber % 11 === 10) {
+  // $controlNumber = 0;
+  echo '$identityCode' . $identityCode;
+  foreach (str_split($identityCode) as $key2 => $value2) {
+    if ($key !== 10) {
+      if ($controlNumberCounter === 10) {
+        $controlNumberCounter = 1;
+      }
+      $controlNumber += intval($value2) * $controlNumberCounter;
+      $controlNumberCounter++;
+      echo '$controlNumber ' . $controlNumber;
+      echo '<br>';
+      echo '$controlNumberCounter ' . $controlNumberCounter;
+      echo '<br>';
+    }
+  }
+}
+
+echo '<br>';
+echo '<br>';
+echo '$controlNumber ' . $controlNumber;
+echo '<br>';
+echo '$controlNumberCounter ' . $controlNumberCounter;
+echo '<br>';
+
+if ($controlNumber % 11 === 10) {
+  $controlNumber = 0;
+} else {
+  $controlNumber = $controlNumber % 11;
+}
+
+echo $controlNumber;
+
+echo '<br>';
+echo substr($identityCode, -1);
