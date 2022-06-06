@@ -3,6 +3,7 @@
 function formatAccountListTable($accountsData)
 {
   $accountList = '<form class="listForm" action="" method="post"><table class="accountsTable">';
+  $parent = 'pages/accountList/';
   if ($accountsData) {
     $accountList .=
       '<tr>
@@ -26,8 +27,8 @@ function formatAccountListTable($accountsData)
         '<td>' . $data['identityCode'] . '</td>' .
         '<td>' . $data['balance'] . '</td>' .
         '<td>' . '<button type="submit" name="delete" value=' . $data['id'] . '>Ištrinti</button>' . '</td>' .
-        '<td>' . '<a href="./addFunds.php?id=' . $data['id'] . '">Pridėti lėšų</a>' . '</td>' .
-        '<td>' . '<a href="./deductFunds.php?id=' . $data['id'] . '">Nuskaičiuoti lėšas</a>' . '</td>' .
+        '<td>' . '<a href="' . URL . $parent . 'addFunds/' . $data['id'] . '">Pridėti lėšų</a>' . '</td>' .
+        '<td>' . '<a href="' . URL . $parent . 'deductFunds/' . $data['id'] . '">Nuskaičiuoti lėšas</a>' . '</td>' .
         "</tr>";
     }
   } else {

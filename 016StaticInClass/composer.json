@@ -1,0 +1,11 @@
+{
+    "name": "super/name",
+    "description": "nieko",
+    "autoload": {
+        "psr-4": {
+            "Meska\\Lokys\\": "",
+            "": ""
+        }
+    },
+    "require": {}
+}

@@ -1,0 +1,36 @@
+.listForm {
+  width: 96%;
+  display: flex;
+  justify-content: center;
+  margin-left: 2%;
+  margin-top: 10px;
+}
+
+.accountsTable {
+  font-family: Arial, Helvetica,
+    sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.accountsTable td,
+.accountsTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.accountsTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.accountsTable tr:hover {
+  background-color: #ddd;
+}
+
+.accountsTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
