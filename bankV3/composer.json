@@ -1,0 +1,15 @@
+{
+    "name": "vienaragiai/bankv3",
+    "description": "Vienaragiai bank",
+    "autoload": {
+        "psr-4": {
+            "Bankas\\": "src/app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kasparas"
+        }
+    ],
+    "require": {}
+}

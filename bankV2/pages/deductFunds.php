@@ -18,7 +18,7 @@ $title = 'Add funds';
 require DIR . 'views/top.php';
 require __DIR__ . '/../components/menu/menu.php'
 ?>
-<form class="newAccForm" action="http://localhost/my-vienaragiai/bankV2/pages/accountList/deductFunds/<?= $url[3] ?>" method="post">
+<form class="newAccForm" action="http://manobankas.lt/pages/accountList/deductFunds/<?= $url[3] ?>" method="post">
   <h2>Vardas: <?php echo $name ?></h2>
   <h2>Pavardė: <?php echo $surname ?></h2>
   <h2>Likutis: <?php echo $balance ?></h2>

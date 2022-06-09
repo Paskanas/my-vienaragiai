@@ -298,3 +298,24 @@ echo $controlNumber;
 
 echo '<br>';
 echo substr($identityCode, -1);
+echo '<br>';
+echo '<br>';
+echo '<br>';
+
+
+function last($x)
+{
+  $x = explode(' ', $x);
+  foreach ($x as &$value) {
+    $value = strrev($value);
+  }
+  sort($x);
+  foreach ($x as &$value) {
+    $value = strrev($value);
+  }
+  return $x;
+}
+
+print_r(last('man i need a taxi up to ubud'));
+echo '<br>';
+print_r(last('what time are we climbing up the volcano'));

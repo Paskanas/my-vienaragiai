@@ -18,5 +18,4 @@ $accountList = formatAccountListTable($accountsData);
 
 require DIR . '/components/menu/menu.php';
 echo $accountList;
-echo validateDeleteAccount(($_GET['err'] ?? -1));
-echo ($_GET['success'] ?? -1) != -1 ? '<div>Įrašas su asmens kodu ' . $_GET['success'] . ', sėkmingai sukurtas.</div>' : '';
+echo validateDeleteAccount(($url[2] ?? -1), $accountsData);

@@ -1,0 +1,183 @@
+.menu {
+  height: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* margin-bottom: 10px; */
+  width: 100%;
+}
+
+.menuLink {
+  gap: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: white;
+  font-size: 15px;
+}
+
+.menuLogo {
+  width: 60px;
+  height: 60px;
+  margin: 0 10px;
+}
+
+.header {
+  background-color: #4397e0;
+  display: flex;
+}
+
+.listForm {
+  width: 96%;
+  display: flex;
+  justify-content: center;
+  margin-left: 2%;
+  margin-top: 10px;
+}
+
+.accountsTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.accountsTable td,
+.accountsTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.accountsTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.accountsTable tr:hover {
+  background-color: #ddd;
+}
+
+.accountsTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+
+.mainPageBG {
+  background-image: url(/content/mainPageBG.jpg);
+  width: 100%;
+  height: calc(100vh - 60px);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.welcome {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  font-size: 70px;
+  font-family: serif;
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 20px;
+}
+
+.mainPageLinks {
+  display: flex;
+  flex-direction: column;
+  font-size: 40px;
+  margin-left: 80px;
+  margin-top: 40px;
+  font-weight: 500;
+  width: 500px;
+  font-family: serif;
+}
+
+.mpLink {
+  text-decoration: none;
+  color: white;
+}
+
+.mpLink:hover {
+  color: orange;
+}
+
+body,
+body * {
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: azure;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.newAccForm {
+  display: flex;
+  justify-content: center;
+  background-color: aqua;
+  width: auto;
+  flex-direction: column;
+  margin-left: 40px;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 50px;
+}
+
+.newAccForm input,
+button {
+  margin: 4px;
+  height: 30px;
+  font-size: 20px;
+}
+
+.newAccForm button {
+  background-color: #4397e0;
+  border: none;
+  border-radius: 20px;
+  color: white;
+}
+
+.newAccForm button:hover {
+  background-color: cornflowerblue;
+}
+
+.newAccForm h3 {
+  font-family: serif;
+  font-weight: 400;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.newAccForm span {
+  text-transform: none;
+}
+
+.loginForm {
+  display: flex;
+  justify-content: center;
+  background-color: wheat;
+  width: 50%;
+  height: 300px;
+  margin-left: 25%;
+  align-items: center;
+}
+
+.loginInput {
+  height: 30px;
+}
+
+.error {
+  color: red;
+  font-size: 20px;
+}
+
+.message {
+  color: green;
+  font-size: 20px;
+}

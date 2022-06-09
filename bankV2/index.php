@@ -2,9 +2,10 @@
 define('INSTALL', '/my-vienaragiai/bankV2/');
 // echo __DIR__ . '<br>';
 define('DIR', __DIR__ . '/');
-define('URL', 'http://localhost/my-vienaragiai/bankV2/');
+define('URL', 'http://manobankas.lt/');
 $url = str_replace(INSTALL, '', $_SERVER['REQUEST_URI']);
 $url = explode('/', $url);
+array_shift($url);
 print_r($url);
 
 if (count($url) > 1) {
@@ -16,7 +17,7 @@ if (count($url) > 1) {
         } else if ($url[2] === 'deductFunds') {
           require __DIR__ . '/pages/deductFunds.php';
         } else {
-          require __DIR__ . '/pages/newAccount.php';
+          require __DIR__ . '/pages/accountList.php';
         }
       } else {
         require __DIR__ . '/pages/accountList.php';

@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
   file_put_contents(DIR . '/data/accounts.json', json_encode($allAccounts));
-  header('Location: http://localhost/my-vienaragiai/bankV2/pages/accountList/addFunds/' . $url[3] /*. '?err=' . $err*/);
+  header('Location: http://manobankas.lt/pages/accountList/addFunds/' . $url[3] /*. '?err=' . $err*/);
   die;
 }
 

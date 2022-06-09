@@ -71,7 +71,12 @@ button {
   height: 30px;
 }
 
-.message {
+.error {
   color: red;
+  font-size: 20px;
+}
+
+.message {
+  color: green;
   font-size: 20px;
 }

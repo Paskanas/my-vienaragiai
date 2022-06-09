@@ -9,12 +9,12 @@ function accountDeletion($accountsData)
           $err = 1;
           break;
         } else {
-          $err = 0;
+          $err = 2;
         }
       }
     }
     file_put_contents(__DIR__ . '/../data/accounts.json', json_encode($accountsData));
-    header('Location: ' .  $_SERVER['PHP_SELF'] . '?err=' . $err);
+    header('Location: ' .  'http://manobankas.lt/pages/accountList' . '/' . $err);
     die;
   }
 }

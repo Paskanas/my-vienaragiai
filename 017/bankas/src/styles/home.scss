@@ -1,0 +1,9 @@
+.home {
+  color: aqua;
+  &__bin {
+    color: bisque;
+    &__content {
+      color: blue;
+    }
+  }
+}

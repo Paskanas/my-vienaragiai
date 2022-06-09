@@ -18,19 +18,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($err == 0) {
     file_put_contents(__DIR__ . '/../data/accounts.json', json_encode([...$acountsList, ['id' => getNewId(), ...$_POST, 'balance' => $defaultBalance]]));
     saveIban($_POST['bankAccount']);
-    header('Location: http://localhost/my-vienaragiai/013/bank/pages/accountList.php?success=' . $_POST['identityCode']);
+    header('Location: http://manobankas.lt/pages/accountList/' . 0);
     die;
   } else {
-    header('Location: http://localhost/my-vienaragiai/013/bank/pages/newAccount.php' .
-      '?name=' . $_POST['name'] .
-      '&surname=' . $_POST['surname'] .
-      '&identityCode=' . $_POST['identityCode'] .
-      '&err=' . $err);
-    die;
+    $message = getErrMessage($err);
+
+    // header('Location: http://manobankas.lt/pages/newAccount/' . $err);
+    // '?name=' . $_POST['name'] .
+    // '&surname=' . $_POST['surname'] .
+    // '&identityCode=' . $_POST['identityCode'] .
+    // '&err=' . $err);
+    // die;
   }
 } else {
-  if (($_GET['err'] ?? -1) != -1) {
-    $message = getErrMessage($_GET['err']);
+  if (($url[2] ?? -1) != -1) {
+    $message = getErrMessage($url[2]);
   }
 }
 ?>
@@ -48,10 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <?php require __DIR__ . '/../components/menu/menu.php' ?>
   <form class="newAccForm" action="" method="post">
-    <input type="text" name='name' placeholder="Vardas" required value="<?php echo $_GET['name'] ?? '' ?>">
-    <input type="text" name='surname' placeholder="Pavardė" required value="<?php echo $_GET['surname'] ?? '' ?>">
+    <input type="text" name='name' placeholder="Vardas" required value="<?php echo $_POST['name'] ?? '' ?>">
+    <input type="text" name='surname' placeholder="Pavardė" required value="<?php echo $_POST['surname'] ?? '' ?>">
     <input type="text" name='bankAccount' required readonly value="<?php echo createIBAN() ?>">
-    <input type="number" name='identityCode' placeholder="Asmens kodas" required value="<?php echo $_GET['identityCode'] ?? '' ?>">
+    <input type="number" name='identityCode' placeholder="Asmens kodas" required value="<?php echo $_POST['identityCode'] ?? '' ?>">
     <button type="submit">Sukurti</button>
     <?php echo $message ?>
   </form>
