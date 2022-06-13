@@ -104,6 +104,46 @@
   color: orange;
 }
 
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aquamarine;
+  flex-direction: column;
+  height: 200px;
+  width: 300px;
+  border-radius: 50px;
+}
+
+.loginInput {
+  margin: 10px;
+  width: 250px;
+}
+
+.loginBtn {
+  background-color: darkcyan;
+  border-radius: 15px;
+  padding: 0 15px;
+}
+
+.loginBg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-image: url(/content/mainPageBG.jpg);
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.logoutText {
+  line-height: 38px;
+  color: crimson;
+  width: 600;
+  font-size: 20px;
+}
+
 body,
 body * {
   margin: 0;
@@ -175,9 +215,13 @@ button {
 .error {
   color: red;
   font-size: 20px;
+  margin-left: 2%;
+  margin-top: 10px;
 }
 
 .message {
   color: green;
   font-size: 20px;
+  margin-left: 2%;
+  margin-top: 10px;
 }

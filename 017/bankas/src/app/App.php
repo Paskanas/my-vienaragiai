@@ -26,6 +26,11 @@ class App
     // print_r($uri);
   }
 
+  public static function csrf()
+  {
+    return md5('namas' . $_SERVER['HTTP_USER_AGENT']);
+  }
+
   public static function  getAuthName(): string
   {
     return $_SESSION['user'];
@@ -120,6 +125,9 @@ class App
         return (new HomeControler)->form();
       }
       if ($uri[0] === 'form' && $method === 'POST') {
+        if (($_POST['csrf'] ?? '') != App::csrf()) {
+          Messages::add('Blogas portas', 'error');
+        }
         return (new HomeControler)->doForm();
       }
       if ($uri[0] === 'json' && $method === 'GET') {

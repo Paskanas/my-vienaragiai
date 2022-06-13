@@ -3,7 +3,8 @@
     "description": "Vienaragiai bank",
     "autoload": {
         "psr-4": {
-            "Bankas\\": "src/app/"
+            "Bankas\\": "src/app/",
+            "App\\DB\\": "src/app/Interfaces/"
         }
     },
     "authors": [

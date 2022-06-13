@@ -2,25 +2,28 @@
 
 namespace Bankas\Controllers;
 
-
 use Bankas\App;
+use Bankas\Interfaces\AddRemovePagesInterface;
 use Bankas\Validations\Messages;
-//use Bankas\Interfaces\PagesInterface;
+use Bankas\Validations\ValidateAccount;
 
-class AddFundsController //implements PagesInterface
+class AddFundsController implements AddRemovePagesInterface
 {
   public static function index($id): void
   {
-    App::view('addFunds', ['messages' => Messages::get(), 'id' => $id]);
+    $name = App::$db->getRecordDataByName($id, 'name');
+    $surname = App::$db->getRecordDataByName($id, 'surname');
+    $balance = App::$db->getRecordDataByName($id, 'balance');
+    App::view('addFunds', ['messages' => Messages::get(), 'id' => $id, 'name' => $name, 'surname' => $surname, 'balance' => $balance]);
   }
+
   public static function post($id): void
   {
-    $allAccounts = [];
-    if (file_exists(__DIR__ . '/../../data/accounts.json')) {
-      $allAccounts = json_decode(file_get_contents(__DIR__ . '/../../data/accounts.json'), true);
+    if (ValidateAccount::validateAdd($_POST['sum'])) {
+      $currentAccount = App::$db->show($id);
+      $currentAccount['balance'] += $_POST['sum'];
+      App::$db->update($id, $currentAccount);
     }
-    require(__DIR__ . '/../functions/add.php');
-
     App::redirect('addFunds', $id);
   }
 }

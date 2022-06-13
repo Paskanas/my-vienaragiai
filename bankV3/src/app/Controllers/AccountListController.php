@@ -2,30 +2,28 @@
 
 namespace Bankas\Controllers;
 
-require __DIR__ . '/../functions/accountDeletion.php';
-
 use Bankas\App;
 use Bankas\Interfaces\PagesInterface;
 use Bankas\Validations\Messages;
+use Bankas\Validations\ValidateAccount;
 
-class AccountListController implements PagesInterface
+class AccountListController  implements PagesInterface
 {
   public static function index(): void
   {
     App::view('accountList', ['messages' => Messages::get()]);
   }
+
   public static function post()
   {
-    $accountsData = [];
-    if (file_exists(__DIR__ . '/../../data/accounts.json')) {
-      $accountsData = json_decode(file_get_contents(__DIR__ . '/../../data/accounts.json'), true);
-      usort($accountsData, function ($item1, $item2) {
-        return $item1['surname'] <=> $item2['surname'];
-      });
-      // account deletion
-      accountDeletion($accountsData);
+    $accountsData = App::$db->showAll();
+    if ($accountsData) {
+      $account = App::$db->show($_POST['delete']);
+      if (ValidateAccount::validateDelete($account)) {
+        App::$db->delete($_POST['delete']);
+      }
     }
 
-    return App::redirect('accountList');
+    App::redirect('accountList');
   }
 }
