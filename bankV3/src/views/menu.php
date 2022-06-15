@@ -12,7 +12,8 @@
       <a class="menuLink" href="<?= URL ?>newAccount">Naujos sąskaitos sukūrimas</a>
     <?php else : ?>
       <a class="menuLink" href="<?= URL ?>login">Login</a>
-    <?php endif;
+    <?php
+    endif;
     require __DIR__ . '/logout.php'; ?>
   </nav>
 </header>

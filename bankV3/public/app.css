@@ -225,3 +225,23 @@ button {
   margin-left: 2%;
   margin-top: 10px;
 }
+
+.currencyInput {
+  height: 30px;
+  margin: 0 10px;
+  width: 200px;
+}
+
+.currencyForm {
+  margin-left: 2%;
+  margin-top: 10px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.currencyButton {
+  background-color: chartreuse;
+  border-radius: 15px;
+  padding: 0 20px;
+}

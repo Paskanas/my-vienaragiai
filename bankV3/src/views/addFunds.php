@@ -12,5 +12,6 @@ require __DIR__ . '/menu.php'
   <button type="submit">Pridėti</button>
   <input type="hidden" name="csrf" value="<?= Auth::csrf() ?>">
 </form>
-<?php require __DIR__ . '/messages.php';
+<?php
+require __DIR__ . '/messages.php';
 require __DIR__ . '/bottom.php';

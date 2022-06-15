@@ -11,17 +11,25 @@ class AccountListController  implements PagesInterface
 {
   public static function index(): void
   {
-    App::view('accountList', ['messages' => Messages::get()]);
+    $convertTo = $_SESSION['convertTo'] ?? 'VES';
+    unset($_SESSION['convertTo']);
+    App::view('accountList', ['messages' => Messages::get(), 'convertTo' => $convertTo]);
   }
 
   public static function post()
   {
-    $accountsData = App::$db->showAll();
-    if ($accountsData) {
-      $account = App::$db->show($_POST['delete']);
-      if (ValidateAccount::validateDelete($account)) {
-        App::$db->delete($_POST['delete']);
+    print_r($_POST);
+    if (isset($_POST['delete'])) {
+      $accountsData = App::$db->showAll();
+      if ($accountsData) {
+        $account = App::$db->show($_POST['delete']);
+        if (ValidateAccount::validateDelete($account)) {
+          App::$db->delete($_POST['delete']);
+        }
       }
+    }
+    if (isset($_POST['currency'])) {
+      $_SESSION['convertTo'] = $_POST['currency'];
     }
 
     App::redirect('accountList');
