@@ -24,6 +24,9 @@ class FileController implements DataBase
 
   public function __destruct()
   {
+    if ($this->data === null) {
+      return;
+    }
     file_put_contents($this->path, json_encode($this->data));
   }
 
@@ -60,6 +63,8 @@ class FileController implements DataBase
     foreach ($this->data as $key => $account) {
       if ($userId === $account['id']) {
         unset($this->data[$key]);
+        $this->data = array_values($this->data);
+        break;
       }
     }
   }

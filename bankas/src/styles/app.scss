@@ -1,0 +1,20 @@
+h1 {
+  color: crimson;
+}
+
+h2 {
+  color: burlywood;
+}
+
+.success {
+  padding: 5px;
+  background-color: aqua;
+  color: green;
+}
+
+.error {
+  color: red;
+  padding: 5px;
+}
+
+@import 'home';

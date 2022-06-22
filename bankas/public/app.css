@@ -1,0 +1,28 @@
+h1 {
+  color: crimson;
+}
+
+h2 {
+  color: burlywood;
+}
+
+.success {
+  padding: 5px;
+  background-color: aqua;
+  color: green;
+}
+
+.error {
+  color: red;
+  padding: 5px;
+}
+
+.home {
+  color: aqua;
+}
+.home__bin {
+  color: bisque;
+}
+.home__bin__content {
+  color: blue;
+}

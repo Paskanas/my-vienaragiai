@@ -37,7 +37,7 @@ class NewAccountController implements PagesInterface
     App::redirect('newAccount');
   }
 
-  private static function generateIban()
+  public static function generateIban()
   {
     $loopCounter = 0;
     $newIdString = strval(App::$db->maxId() + 1);

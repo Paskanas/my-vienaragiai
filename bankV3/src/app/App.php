@@ -12,6 +12,7 @@ use Bankas\Controllers\FileController;
 use Bankas\Controllers\NotFoundController;
 use Bankas\Validations\Messages;
 use Bankas\Controllers\UserController;
+use Bankas\Validations\ValidateAccount;
 
 class App
 {
@@ -37,6 +38,11 @@ class App
     echo self::$html;
   }
 
+  public static function json($data = [])
+  {
+    echo json_encode($data);
+  }
+
   public static function redirect(string $url = '', $id = '')
   {
     if ($url === 'accountList') {
@@ -55,105 +61,167 @@ class App
   private static function route(array $url)
   {
     $method = $_SERVER['REQUEST_METHOD'];
-    if (count($url) === 1) {
-      if ($url[0] === 'login') {
-        if ($method === 'GET') {
-          if (Auth::auth()) {
-            return self::redirect('');
+    if (count($url) > 0 && $url[0] === 'api') {
+      header('Content-Type: application/json');
+      header('Access-Control-Allow-Origin: *');
+      header('Access-Control-Allow-Methods: GET, POST, DELETE, PUT');
+      header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With");
+      // echo json_encode($data);
+      if (count($url) === 2) {
+        if ($url[1] === 'home' && $method === 'GET') {
+          self::json(self::$db->showAll());
+        }
+
+        if ($url[1] === 'home' && $method === 'POST') {
+          $rawData = file_get_contents("php://input");
+          $data = json_decode($rawData, 1);
+          $iban = (new NewAccountController)->generateIban();
+
+          $validation = ValidateAccount::validateIdentityCode2($data['identityCode'], $data['name'], $data['surname']);
+          if ($validation[1] === 'message') {
+            self::$db->create([...$data, 'bankAccount' => $iban, 'balance' => 0]);
           }
-          return (new UserController)->showLogin();
+          self::json($validation);
         }
-        if ($method === 'POST') {
-          if (($_POST['csrf'] ?? '') != Auth::csrf()) {
-            Messages::add('Blogas portas', 'error');
-            return (new NotFoundController)->index();
-          }
-          return (new UserController)->doLogin();
-        }
-      } else if ($url[0] === 'logout') {
-        if ($method === 'POST') {
-          return (new UserController)->logout();
-        }
-      } else if ($url[0] === '') {
-        if (!Auth::auth()) {
-          return self::redirect('login');
-        }
-        return (new HomeController)->index();
-      } else if ($url[0] === 'newAccount') {
-        if ($method === 'GET') {
-          if (!Auth::auth()) {
-            return self::redirect('login');
-          }
-          return (new NewAccountController)->index();
-        }
-        if ($method === 'POST') {
-          if (($_POST['csrf'] ?? '') != Auth::csrf()) {
-            Messages::add('Blogas portas', 'error');
-            return (new NotFoundController)->index();
-          }
-          return (new NewAccountController)->post();
+
+        if ($url[1] === 'newIban' && $method === 'GET') {
+          $iban = (new NewAccountController)->generateIban();
+          self::json($iban);
         }
       }
-      return (new NotFoundController)->index();
-    } else if (count($url) >= 2 && count($url) <= 4) {
-      if ($url[0] === 'pages') {
-        if ($url[1] === 'accountList') {
-          if (count($url) === 2) {
-            if ($method === 'GET') {
-              if (!Auth::auth()) {
-                return self::redirect('login');
-              }
-              return (new AccountListController)->index();
-            } else if ($method === 'POST') {
-              if (($_POST['csrf'] ?? '') != Auth::csrf()) {
-                Messages::add('Blogas portas', 'error');
-                return (new NotFoundController)->index();
-              }
-              return (new AccountListController)->post();
-            }
-          } else if (count($url) === 4 && isset($url[3])) {
-            if ($url[2] === 'addFunds') {
-              if ($method === 'GET') {
-                if (!Auth::auth()) {
-                  return self::redirect('login');
-                }
-                return (new AddFundsController)->index($url[3]);
-              }
-              if ($method === 'POST') {
-                if (($_POST['csrf'] ?? '') != Auth::csrf()) {
-                  Messages::add('Blogas portas', 'error');
-                  return (new NotFoundController)->index();
-                }
-                return (new AddFundsController)->post($url[3]);
-              }
-            }
-            if ($url[2] === 'deductFunds') {
-              if ($method === 'GET') {
-                if (!Auth::auth()) {
-                  return self::redirect('login');
-                }
-                return (new DeductFundsController)->index($url[3]);
-              }
-              if ($method === 'POST') {
-                if (($_POST['csrf'] ?? '') != Auth::csrf()) {
-                  Messages::add('Blogas portas', 'error');
-                  return (new NotFoundController)->index();
-                }
-                return (new DeductFundsController)->post($url[3]);
-              }
-            }
-            return (new NotFoundController)->index();
-          } else {
-            return (new NotFoundController)->index();
+      if (count($url) === 3) {
+        if ($url[1] === 'home' && $method === 'DELETE') {
+          $data = self::$db->show($url[2]);
+          $validation = ValidateAccount::validateDelete2($data['balance']);
+          if ($validation[1] === 'message') {
+            self::$db->delete($url[2]);
           }
-        } else {
-          return (new NotFoundController)->index();
+          self::json($validation);
         }
-      } else {
-        return (new NotFoundController)->index();
+        if ($url[1] === 'home' && $method === 'PUT') {
+          $rawData = file_get_contents("php://input");
+          $data = json_decode($rawData, 1);
+          if ($data['method'] === 'add') {
+            $validation = ValidateAccount::validateAdd2($data['sum']);
+            if ($validation[1] === 'message') {
+              $data['balance'] += $data['sum'];
+            }
+          }
+          if ($data['method'] === 'deduct') {
+            $validation = ValidateAccount::validateSubstract2($data['sum'], $data['balance']);
+            if ($validation[1] === 'message') {
+              $data['balance'] -= $data['sum'];
+            }
+          }
+          if ($validation[1] === 'message') {
+            unset($data['sum']);
+            unset($data['method']);
+            self::$db->update($url[2], $data);
+          }
+          self::json($validation);
+        }
       }
     } else {
-      return (new NotFoundController)->index();
+      if (count($url) === 1) {
+        if ($url[0] === 'login') {
+          if ($method === 'GET') {
+            if (Auth::auth()) {
+              self::redirect('');
+            }
+            (new UserController)->showLogin();
+          }
+          if ($method === 'POST') {
+            if (($_POST['csrf'] ?? '') != Auth::csrf()) {
+              Messages::add('Blogas portas', 'error');
+              (new NotFoundController)->index();
+            }
+            (new UserController)->doLogin();
+          }
+        } else if ($url[0] === 'logout') {
+          if ($method === 'POST') {
+            (new UserController)->logout();
+          }
+        } else if ($url[0] === '') {
+          if (!Auth::auth()) {
+            self::redirect('login');
+          }
+          (new HomeController)->index();
+        } else if ($url[0] === 'newAccount') {
+          if ($method === 'GET') {
+            if (!Auth::auth()) {
+              self::redirect('login');
+            }
+            (new NewAccountController)->index();
+          }
+          if ($method === 'POST') {
+            if (($_POST['csrf'] ?? '') != Auth::csrf()) {
+              Messages::add('Blogas portas', 'error');
+              (new NotFoundController)->index();
+            }
+            (new NewAccountController)->post();
+          }
+        }
+        (new NotFoundController)->index();
+      } else if (count($url) >= 2 && count($url) <= 4) {
+        if ($url[0] === 'pages') {
+          if ($url[1] === 'accountList') {
+            if (count($url) === 2) {
+              if ($method === 'GET') {
+                if (!Auth::auth()) {
+                  self::redirect('login');
+                }
+                (new AccountListController)->index();
+              } else if ($method === 'POST') {
+                if (($_POST['csrf'] ?? '') != Auth::csrf()) {
+                  Messages::add('Blogas portas', 'error');
+                  (new NotFoundController)->index();
+                }
+                (new AccountListController)->post();
+              }
+            } else if (count($url) === 4 && isset($url[3])) {
+              if ($url[2] === 'addFunds') {
+                if ($method === 'GET') {
+                  if (!Auth::auth()) {
+                    self::redirect('login');
+                  }
+                  (new AddFundsController)->index($url[3]);
+                }
+                if ($method === 'POST') {
+                  if (($_POST['csrf'] ?? '') != Auth::csrf()) {
+                    Messages::add('Blogas portas', 'error');
+                    (new NotFoundController)->index();
+                  }
+                  (new AddFundsController)->post($url[3]);
+                }
+              }
+              if ($url[2] === 'deductFunds') {
+                if ($method === 'GET') {
+                  if (!Auth::auth()) {
+                    self::redirect('login');
+                  }
+                  (new DeductFundsController)->index($url[3]);
+                }
+                if ($method === 'POST') {
+                  if (($_POST['csrf'] ?? '') != Auth::csrf()) {
+                    Messages::add('Blogas portas', 'error');
+                    (new NotFoundController)->index();
+                  }
+                  (new DeductFundsController)->post($url[3]);
+                }
+              }
+              (new NotFoundController)->index();
+            } else {
+              (new NotFoundController)->index();
+            }
+          } else {
+            (new NotFoundController)->index();
+          }
+        } else {
+          (new NotFoundController)->index();
+        }
+      } else {
+        (new NotFoundController)->index();
+      }
     }
   }
 

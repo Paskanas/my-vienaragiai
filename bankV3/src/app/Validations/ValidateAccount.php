@@ -18,6 +18,14 @@ class ValidateAccount
       return false;
     }
   }
+  public static function validateDelete2($balance)
+  {
+    if ($balance === 0) {
+      return ['Įrašas sėkmingai ištrintas', 'message'];
+    } else {
+      return ['Įrašo išytrinti negalima, nes balansas nelygu 0', 'error'];
+    }
+  }
 
   public static function validateAdd($sum)
   {
@@ -28,6 +36,13 @@ class ValidateAccount
     Messages::add('Veiksmas sėkmingai atliktas', 'message');
     return true;
   }
+  public static function validateAdd2($sum)
+  {
+    if ($sum <= 0) {
+      return ['Suma negali būti mažesnė ar lygi 0', 'error'];
+    }
+    return ['Veiksmas sėkmingai atliktas', 'message'];
+  }
 
   public static function validateSubstract($sum, $currentAccount)
   {
@@ -35,12 +50,24 @@ class ValidateAccount
       Messages::add('Suma negali būti mažesnė ar lygi 0', 'error');
       return false;
     }
-    if ($currentAccount['balance'] >= $_POST['sum']) {
+    if ($currentAccount['$balance'] >= $_POST['sum']) {
       Messages::add('Veiksmas sėkmingai atliktas', 'message');
       return true;
     } else {
       Messages::add('Sąskaitos likutis nepakankamas', 'error');
       return false;
+    }
+  }
+
+  public static function validateSubstract2($sum, $balance)
+  {
+    if ($sum <= 0) {
+      return ['Suma negali būti mažesnė ar lygi 0', 'error'];
+    }
+    if ($balance >= $sum) {
+      return ['Veiksmas sėkmingai atliktas', 'message'];
+    } else {
+      return ['Sąskaitos likutis nepakankamas', 'error'];
     }
   }
 
@@ -117,5 +144,68 @@ class ValidateAccount
     }
     Messages::add('Įrašas sėkmingai sukurtas', 'message');
     return true;
+  }
+  public static function validateIdentityCode2($identityCode, $name, $surname): array
+  {
+    $controlNumber = 0;
+    $controlNumberCounter = 1;
+    $accountsList = App::$db->showAll();
+    if (!is_numeric($identityCode)) {
+      return ['Įvestas ne skaičius', 'error'];
+    } else if (strlen($identityCode) < 11) {
+      return ['Asmens kodas negali būti trumpesnis nei 11 simbolių', 'error'];
+    } else if (strlen($identityCode) > 11) {
+      return ['Asmens kodas negali būti ilgensis nei 11 simbolių', 'error'];
+    } else if (strval($identityCode)[0] != 3 && strval($identityCode)[0] != 4) {
+      return ['Asmens kodas turi prasideti skaičiu 3 arba 4', 'error'];
+    } else if (substr($identityCode, 3, 2) > 12) {
+      return ['Neteisingi asmens kodo 4-5 skaitmenys', 'error'];
+    } else if (substr($identityCode, 5, 2) > 31) {
+      return ['Neteisingi asmens kodo 6-7 skaitmenys', 'error'];
+    } else if (strlen($name) < 3) {
+      return ['Įvestas per trumpas vardas', 'error'];
+    } else if (strlen($surname) < 3) {
+      return ['Įvesta per trumpa pavardė', 'error'];
+    } else {
+      foreach (str_split($identityCode) as $key => $value) {
+        if ($key !== 10) {
+          if ($controlNumberCounter === 10) {
+            $controlNumberCounter = 1;
+          }
+          $controlNumber += intval($value) * $controlNumberCounter;
+          $controlNumberCounter++;
+        }
+      }
+      if ($controlNumber % 11 === 10) {
+        // do not know if it needs reset $controlNumber = 0;
+        foreach (str_split($identityCode) as $key => $value) {
+          if ($key !== 10) {
+            if ($controlNumberCounter === 10) {
+              $controlNumberCounter = 1;
+            }
+            $controlNumber += intval($value) * $controlNumberCounter;
+            $controlNumberCounter++;
+          }
+        }
+      }
+
+      if ($controlNumber % 11 === 10) {
+        $controlNumber = 0;
+      } else {
+        $controlNumber = $controlNumber % 11;
+      }
+      if ($controlNumber != substr($identityCode, -1)) {
+        return ['Įvestas nevalidus asmens kodas', 'error'];
+      }
+
+      if ($accountsList) {
+        foreach ($accountsList as $acount) {
+          if ($acount['identityCode'] === $identityCode) {
+            return ['Vartotojas su tokiu asmens kodu jau egzistuoja', 'error'];
+          }
+        }
+      }
+    }
+    return ['Įrašas sėkmingai sukurtas', 'message'];
   }
 }

@@ -1,0 +1,16 @@
+{
+    "name": "vienaragiu/bankas",
+    "description": "tuscia",
+    "autoload": {
+        "psr-4": {
+            "Bankas\\": "src/app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Paskanas",
+            "email": "kaspe1992@gmail.com"
+        }
+    ],
+    "require": {}
+}

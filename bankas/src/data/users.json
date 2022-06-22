@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Mamutas",
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "fullName": "Mamutas Laukinis"
+  },
+  {
+    "id": 2,
+    "name": "Kiskis",
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "fullName": "Kiskis Piskis"
+  },
+  {
+    "id": 3,
+    "name": "Agurkas",
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "fullName": "Agurkas Geltonasis"
+  }
+]

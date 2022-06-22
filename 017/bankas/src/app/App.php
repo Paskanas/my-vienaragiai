@@ -66,7 +66,10 @@ class App
 
   public static function json(array $data = [])
   {
-    header('Content-Type: application/json; charset=utf-8');
+    header('Content-Type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET, POST, DELETE, PUT');
+    header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With");
     echo json_encode($data);
   }
 
@@ -94,6 +97,13 @@ class App
     //Login
 
 
+
+    if ($uri[1] === 'home' && $uri[0] === 'api') {
+      return (new HomeControler)->indexJson();
+    }
+    if ($uri[1] === 'form' && $uri[0] === 'api') {
+      return (new HomeControler)->indexJson();
+    }
 
     if (count($uri) === 1) {
       if ($uri[0] === 'login' && $method === 'GET') {
@@ -133,6 +143,9 @@ class App
       if ($uri[0] === 'json' && $method === 'GET') {
         return (new HomeControler)->indexJson();
       }
+
+
+
       return (new NotFoundController)->index();
     } else if (count($uri) === 2) {
       if ($uri[0] === 'get-it' && $method === 'GET') {
