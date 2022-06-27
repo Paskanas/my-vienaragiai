@@ -24,6 +24,12 @@ class App
     define('URL', 'http://manobankas.lt/');
     session_start();
     Messages::init();
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+      header('Access-Control-Allow-Origin: *');
+      header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With");
+      header('Access-Control-Allow-Methods: GET, POST, DELETE, PUT');
+      die;
+    }
     ob_start();
     $url = explode('/', $_SERVER['REQUEST_URI']);
     array_shift($url);
@@ -40,6 +46,10 @@ class App
 
   public static function json($data = [])
   {
+    header('Content-Type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With");
+
     echo json_encode($data);
   }
 
@@ -58,16 +68,72 @@ class App
     header('Location: ' . $link);
   }
 
+  private static function getUser()
+  {
+    $token = apache_request_headers()['Authorization'] ?? '';
+    if ($token === '') {
+      return null;
+    }
+    $db = new FileController('users');
+    $users = $db->showAll();
+    foreach ($users as $user) {
+      if ($user['session'] == $token) {
+        return $user;
+      }
+    }
+    return null;
+  }
+
   private static function route(array $url)
   {
     $method = $_SERVER['REQUEST_METHOD'];
+    // if ($method == 'OPTIONS') {
+    //   header('Access-Control-Allow-Origin: *');
+    //   header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With");
+    //   header('Access-Control-Allow-Methods: GET, POST, DELETE, PUT');
+    //   die;
+    // }
     if (count($url) > 0 && $url[0] === 'api') {
-      header('Content-Type: application/json');
-      header('Access-Control-Allow-Origin: *');
-      header('Access-Control-Allow-Methods: GET, POST, DELETE, PUT');
-      header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With");
+      // header('Content-Type: application/json');
+      // header('Access-Control-Allow-Origin: *');
+      // header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With");
       // echo json_encode($data);
       if (count($url) === 2) {
+        if ($url[1] == 'login') {
+          $rawData = file_get_contents("php://input");
+          $data = json_decode($rawData, 1);
+          $db = new FileController('users');
+          $users = $db->showAll();
+
+          foreach ($users as $user) {
+            if (
+              $user['name']
+              != $data['name'] ||
+              $user['password'] !=
+              md5($data['password'])
+            ) {
+              continue;
+            }
+            $token = md5(time() . rand(0, 10000));
+            $user['session'] = $token;
+            $db->update($user['id'], $user);
+            // echo json_encode(['token' => $token]);
+            self::json(['token' => $token]);
+            die;
+          }
+          echo json_encode(['msg' => 'error']);
+        }
+        if ($url[1] == 'auth') {
+          $user = self::getUser();
+          if ($user) {
+            // echo json_encode(['user' => $user]);
+            echo self::json(['user' => $user]);
+          } else {
+            // echo json_encode(['msg' => 'Not logged']);
+            echo self::json(['msg' => 'Not logged']);
+          }
+        }
+
         if ($url[1] === 'home' && $method === 'GET') {
           self::json(self::$db->showAll());
         }

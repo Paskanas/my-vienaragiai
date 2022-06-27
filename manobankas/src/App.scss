@@ -105,13 +105,82 @@
   background-color: chocolate;
 }
 
-.createBtn {
+.btn {
   border: none;
   border-radius: 20px;
-  background-color: brown;
   color: white;
   outline: none;
   height: 40px;
   width: 150px;
-  margin-right: 80px;
+  margin-right: 40px;
+}
+
+.btn.create {
+  background-color: cornflowerblue;
+}
+
+.btn.login {
+  background-color: skyblue;
+  width: 200px;
+  height: 60px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 40px;
+  font-family: 'Courier New', Courier,
+    monospace;
+}
+.btn.logout {
+  background-color: crimson;
+}
+
+.currencyInput {
+  height: 30px;
+  margin: 0 10px;
+  width: 200px;
+}
+
+.currencyForm {
+  margin-left: 2%;
+  margin-top: 10px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.currencyButton {
+  background-color: chartreuse;
+  border-radius: 15px;
+  padding: 0 20px;
+}
+
+.log-btn {
+  width: 200px;
+  height: 60px;
+  border: none;
+  outline: none;
+  background-color: skyblue;
+  color: white;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-family: 'Courier New', Courier,
+    monospace;
+  cursor: pointer;
+}
+
+.nice-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  text-transform: uppercase;
+}
+
+.nice-input input {
+  height: 30px;
+  font-size: 20px;
 }

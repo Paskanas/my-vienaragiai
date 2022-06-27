@@ -7,12 +7,13 @@ import './bootstrap.css';
 import './App.scss';
 import Home from './Components/Home';
 import DataContext from './Components/DataContext';
-import AddFunds from './Components/AddFunds';
-import DeductFunds from './Components/DeductFunds';
-import Create from './Components/Create';
-import Loader from './Components/Loader';
+import Login from './Components/Login';
+import { authConfig } from './Functions/auth';
 
 function App() {
+  const [user, setUser] =
+    useState(null);
+
   const [loading, setLoading] =
     useState(false);
 
@@ -20,12 +21,15 @@ function App() {
     accountsList,
     setAccountsList,
   ] = useState([]);
+
   const [
     createAccount,
     setCreateAccount,
   ] = useState(null);
+
   const [editAccount, setEditAccount] =
     useState(null);
+
   const [
     deleteAccount,
     setDeleteAccount,
@@ -33,8 +37,10 @@ function App() {
 
   const [modalAdd, setModalAdd] =
     useState(null);
+
   const [modalDeduct, setModalDeduct] =
     useState(null);
+
   const [modalCreate, setModalCreate] =
     useState(null);
 
@@ -52,7 +58,8 @@ function App() {
     setLoading(true);
     axios
       .get(
-        'http://manobankas.lt/api/home'
+        'http://manobankas.lt/api/home',
+        authConfig()
       )
       .then((res) => {
         setAccountsList(res.data);
@@ -67,7 +74,8 @@ function App() {
       axios
         .post(
           'http://manobankas.lt/api/home',
-          createAccount
+          createAccount,
+          authConfig()
         )
         .then((res) => {
           setMessage(res.data);
@@ -83,7 +91,8 @@ function App() {
     axios
       .delete(
         'http://manobankas.lt/api/home/' +
-          deleteAccount.id
+          deleteAccount.id,
+        authConfig()
       )
       .then((res) => {
         setMessage(res.data);
@@ -99,7 +108,8 @@ function App() {
       .put(
         'http://manobankas.lt/api/home/' +
           editAccount.id,
-        editAccount
+        editAccount,
+        authConfig()
       )
       .then((res) => {
         setMessage(res.data);
@@ -108,9 +118,25 @@ function App() {
       });
   }, [editAccount]);
 
-  const createHandler = () => {
-    setModalCreate(accountsList);
-  };
+  useEffect(() => {
+    axios
+      .get(
+        'http://manobankas.lt/api/auth',
+        authConfig()
+      )
+      .then((res) => {
+        if (res.data.user) {
+          setUser(res.data.user);
+          // setTimeout(() => {
+          //   logout();
+          //   setPageRefresh((r) => !r);
+          // }, 7000);
+        } else {
+          setUser(null);
+        }
+      });
+  }, [pageRefresh]);
+
   return (
     <DataContext.Provider
       value={{
@@ -127,25 +153,21 @@ function App() {
         message,
         resetMessage,
         setMessage,
+        setPageRefresh,
+        loading,
       }}
     >
-      <header className="header">
-        <button
-          className="createBtn"
-          onClick={createHandler}
-        >
-          Create account
-        </button>
-      </header>
-      <div className="container">
-        <div className="row">
-          <Home />
-        </div>
-      </div>
-      <AddFunds />
-      <DeductFunds />
-      <Create />
-      {loading && <Loader />}
+      {user ? (
+        <Home />
+      ) : (
+        <>
+          <div className="App">
+            <header className="App-header">
+              <Login />
+            </header>
+          </div>
+        </>
+      )}
     </DataContext.Provider>
   );
 }

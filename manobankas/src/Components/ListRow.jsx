@@ -1,13 +1,24 @@
+import axios from 'axios';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import { useContext } from 'react';
 import DataContext from './DataContext';
 
-const ListRow = ({ account }) => {
+const ListRow = ({
+  account,
+  convertTo,
+}) => {
   const {
     setDeleteAccount,
     setModalAdd,
     setModalDeduct,
     resetMessage,
   } = useContext(DataContext);
+
+  const [
+    exchangeRate,
+    setExchangeRate,
+  ] = useState(0);
 
   const deleteHandler = () => {
     resetMessage();
@@ -22,6 +33,19 @@ const ListRow = ({ account }) => {
     setModalDeduct(account);
   };
 
+  useEffect(() => {
+    axios
+      .get(
+        'https://api.exchangerate.host/latest?base=EUR&symbols=' +
+          convertTo
+      )
+      .then((res) => {
+        setExchangeRate(
+          res.data.rates[convertTo]
+        );
+      });
+  }, [convertTo]);
+
   return (
     <>
       {
@@ -35,7 +59,10 @@ const ListRow = ({ account }) => {
           </td>
           <td> {account.balance} </td>
           <td>
-            {/* {account.balance > 0 ? round(self::convertTo(account.balance, $to), 2) : 0}*/}
+            {(
+              account.balance *
+              exchangeRate
+            ).toFixed(2)}
           </td>
           <td>
             <button
@@ -61,12 +88,6 @@ const ListRow = ({ account }) => {
           </td>
         </tr>
       }
-      {/*
-          <td> . ($data['balance'] > 0 ? round(self::convertTo($data['balance'], $to), 2) : 0) . '</td>' .
-          '<td>' . '<button type="submit" name="delete" value=' . $data['id'] . '>Ištrinti</button>' . '</td>' .
-          '<td>' . '<a href="' . URL . $parent . 'addFunds/' . $data['id'] . '">Pridėti lėšų</a>' . '</td>' .
-          '<td>' . '<a href="' . URL . $parent . 'deductFunds/' . $data['id'] . '">Nuskaičiuoti lėšas</a>' . '</td>' . 
-          */}
     </>
   );
 };

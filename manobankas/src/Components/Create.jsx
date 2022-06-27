@@ -6,6 +6,7 @@ import {
 import axios from 'axios';
 import DataContext from './DataContext';
 import Message from './Message';
+import { authConfig } from '../Functions/auth';
 
 const Create = () => {
   const {
@@ -29,7 +30,8 @@ const Create = () => {
     if (iban) return;
     axios
       .get(
-        'http://manobankas.lt/api/newIban'
+        'http://manobankas.lt/api/newIban',
+        authConfig()
       )
       .then((res) => setIban(res.data));
   }, [iban]);
@@ -100,7 +102,7 @@ const Create = () => {
                   <input
                     type="text"
                     className="form-control"
-                    value={name}
+                    value={name ?? ''}
                     onChange={(e) =>
                       setName(
                         e.target.value
@@ -117,7 +119,9 @@ const Create = () => {
                     type="text"
                     className="form-control"
                     required
-                    value={surname}
+                    value={
+                      surname ?? ''
+                    }
                     onChange={(e) =>
                       setSurname(
                         e.target.value
@@ -136,7 +140,9 @@ const Create = () => {
                     type="text"
                     className="form-control"
                     required
-                    value={identityCode}
+                    value={
+                      identityCode ?? ''
+                    }
                     onChange={(e) =>
                       setIdentityCode(
                         e.target.value
