@@ -19,6 +19,13 @@
     {{-- <input type="text" name="csrf" value=""> --}}
     <button type="submit">Atimti</button>
   </form>
+@foreach($colors as $color)
+  <li>{{$color->id}}: {{$color->color}}</li>
+@endforeach
+
+
 </body>
+
+
 
 </html>

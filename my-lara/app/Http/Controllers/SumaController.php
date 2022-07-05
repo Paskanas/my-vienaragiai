@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Color;
 
 class SumaController extends Controller
 {
@@ -17,15 +18,22 @@ class SumaController extends Controller
 
     public function skirtumas(Request $request)
     {
+        $color = Color::all();
+
         $result = $request->session()->get('result', '');
-        return view('post.form', ['result' => $result]);
+        return view('post.form', ['result' => $result, 'colors' => $color]);
     }
 
     public function skaiciuoti(Request $request)
     {
         $result = $request->x - $request->y;
         dump($result);
+        /* intelephense-disable */
         // $request->session()->flash('result', $result);
+        /* intelephense-enable */
+        $color = new Color;
+        $color->color = $result;
+        $color->save();
         return redirect()->route('forma')->with('result', $result);
     }
 }
