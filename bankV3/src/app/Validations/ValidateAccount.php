@@ -10,7 +10,7 @@ class ValidateAccount
 
   public static function validateDelete($account)
   {
-    if ($account['balance'] === 0) {
+    if ($account['balance'] == 0) {
       Messages::add('Įrašas sėkmingai ištrintas', 'message');
       return true;
     } else {
@@ -50,7 +50,7 @@ class ValidateAccount
       Messages::add('Suma negali būti mažesnė ar lygi 0', 'error');
       return false;
     }
-    if ($currentAccount['$balance'] >= $_POST['sum']) {
+    if ($currentAccount['balance'] >= $_POST['sum']) {
       Messages::add('Veiksmas sėkmingai atliktas', 'message');
       return true;
     } else {

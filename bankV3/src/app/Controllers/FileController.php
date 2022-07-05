@@ -46,6 +46,9 @@ class FileController implements DataBase
 
   public function create(array $userData): void
   {
+    if (isset($userData['csrf'])) {
+      unset($userData['csrf']);
+    }
     $this->data[] = [...$userData, 'id' => $this->newId()];
   }
 

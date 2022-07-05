@@ -112,6 +112,7 @@ function App() {
         authConfig()
       )
       .then((res) => {
+        console.log(res.data);
         setMessage(res.data);
         setPageRefresh(Date.now());
         setLoading(false);

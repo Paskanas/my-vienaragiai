@@ -9,7 +9,7 @@ class AccountModel
 {
   public static function accountListModel($to = 'VES')
   {
-    App::$db->sort();
+    // App::$db->sort();
     $accountsData = App::$db->showAll();
     $accountList = '<form class="listForm" method="post"><table class="accountsTable">';
     $parent = 'pages/accountList/';

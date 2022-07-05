@@ -10,8 +10,9 @@ use Bankas\Controllers\AuthorizationController as Auth;
 use Bankas\Controllers\DeductFundsController;
 use Bankas\Controllers\FileController;
 use Bankas\Controllers\NotFoundController;
-use Bankas\Validations\Messages;
 use Bankas\Controllers\UserController;
+use Bankas\Controllers\DBController;
+use Bankas\Validations\Messages;
 use Bankas\Validations\ValidateAccount;
 
 class App
@@ -33,7 +34,8 @@ class App
     ob_start();
     $url = explode('/', $_SERVER['REQUEST_URI']);
     array_shift($url);
-    self::$db = new FileController('accounts');
+    // self::$db = new FileController('accounts');
+    self::$db = new DBController('accounts');
     self::route($url);
     self::$html = ob_get_contents();
     ob_end_clean();

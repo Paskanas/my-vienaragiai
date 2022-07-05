@@ -18,7 +18,6 @@ class AccountListController  implements PagesInterface
 
   public static function post()
   {
-    print_r($_POST);
     if (isset($_POST['delete'])) {
       $accountsData = App::$db->showAll();
       if ($accountsData) {
