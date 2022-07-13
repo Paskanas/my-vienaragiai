@@ -1,0 +1,68 @@
+form,
+li {
+    list-style: none;
+}
+
+.color-box {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form {
+    margin: 100px;
+    border: 1px solid grey;
+    padding: 20px;
+}
+
+.alert-success {
+    background-color: aquamarine;
+    padding: 10px;
+    display: flex;
+}
+
+.alert-deleted {
+    background-color: brown;
+    padding: 10px;
+    display: flex;
+}
+
+nav {
+    display: inline-block;
+    font-size: 150%;
+    text-decoration: none;
+    margin: 30px;
+    color: crimson;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.controls a {
+    margin: 20px 5px 40px 0;
+    border: none;
+    padding: 0px;
+    color: bisque;
+}
+
+form.delete {
+    margin: 20px 0 40px 0;
+    border: none;
+    padding: 0px;
+}
+
+form.delete button {
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: bisque;
+}

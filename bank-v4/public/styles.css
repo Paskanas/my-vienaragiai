@@ -1,0 +1,170 @@
+.listForm {
+    width: 96%;
+    display: flex;
+    justify-content: center;
+    margin-left: 2%;
+    margin-top: 10px;
+}
+
+.accountsTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.accountsTable td,
+.accountsTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.accountsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.accountsTable tr:hover {
+    background-color: #ddd;
+}
+
+.accountsTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04aa6d;
+    color: white;
+}
+
+header {
+    width: 100%;
+}
+
+.headerNav {
+    width: 100%;
+    background-color: cornflowerblue;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.headerNav a {
+    margin: 0 10px;
+    font-size: 20px;
+    text-decoration: none;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
+    font-weight: 600;
+}
+
+body,
+body * {
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
+}
+
+.search {
+    margin-left: 2%;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: burlywood;
+    width: 30%;
+    height: 50px;
+    border-radius: 15px;
+}
+
+.search button {
+    background-color: aquamarine;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.search input {
+    height: 25px;
+    padding: 0 5px;
+    border-radius: 2px;
+    border-style: none;
+}
+
+.searchReset {
+    margin-left: 10px;
+}
+
+.create {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin-left: 2%;
+    margin-top: 10px;
+    background-color: burlywood;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.create input {
+    height: 25px;
+    margin: 4px 0;
+    float: left;
+}
+
+.create button {
+    height: 25px;
+    background-color: blueviolet;
+    border: none;
+    border-radius: 5px;
+    width: 100px;
+    justify-self: flex-end;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+}
+
+.funds {
+    background-color: cornsilk;
+    padding: 30px;
+    border-radius: 15px;
+    font-size: 25px;
+}
+
+.funds > button {
+    height: 30px;
+    border-radius: 10px;
+    border-width: 1px;
+    padding-left: 10px;
+    margin: 10px 0;
+    font-size: 25px;
+    padding: 0 10px;
+}
+.funds > input {
+    height: 30px;
+    border-radius: 10px;
+    border-width: 1px;
+    padding-left: 10px;
+    margin: 10px 0;
+    font-size: 25px;
+    width: 250px;
+}
+
+.funds span {
+    float: right;
+    color: red;
+}
+.funds h3 {
+    border: 1px solid grey;
+    margin: 5px 0;
+    padding: 0 10px;
+    background-color: antiquewhite;
+    border-radius: 10px;
+}

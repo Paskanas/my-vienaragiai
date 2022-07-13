@@ -1,0 +1,72 @@
+// // Fonts
+// @import url("https://fonts.googleapis.com/css?family=Nunito"); ne vieta cia, deti tiesiai i blade.php teva
+
+// Variables
+@import "variables";
+
+// Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
+
+body {
+    font-family: Hind Madurai;
+}
+
+.list-group-item {
+    .controls {
+        display: flex;
+    }
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+        text-decoration: none;
+        padding: 0 7px;
+        color: brown;
+        transform: all 0.4s;
+        &hover {
+            color: blue;
+        }
+    }
+}
+
+.color-bin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .controls {
+        display: flex;
+    }
+    .color-box {
+        padding: 20px;
+        width: 200px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        h2 {
+            margin: 0;
+            text-transform: capitalize;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px white;
+            color: black;
+        }
+    }
+}
+
+.delete {
+    margin: 0;
+}
+
+h1.nice {
+    text-transform: capitalize;
+    text-shadow: 1px 1px white;
+    color: black;
+    letter-spacing: 12px;
+    font-size: 40px;
+}
