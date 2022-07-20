@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
             'identityCode' => '39207300125',
             'bankAccount' => 'LT240557281627945732',
             'balance' => '20',
-
         ]);
         DB::table('accounts')->insert([
             'name' => 'Jonas',
@@ -37,7 +36,6 @@ class DatabaseSeeder extends Seeder
             'identityCode' => '39207300124',
             'bankAccount' => 'LT240557281627945733',
             'balance' => '30',
-
         ]);
         DB::table('accounts')->insert([
             'name' => 'Petras',
@@ -45,7 +43,6 @@ class DatabaseSeeder extends Seeder
             'identityCode' => '39207300125',
             'bankAccount' => 'LT240557281627945734',
             'balance' => '0',
-
         ]);
 
         DB::table('users')->insert([
