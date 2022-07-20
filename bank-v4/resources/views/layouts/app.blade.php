@@ -10,15 +10,9 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
 
   <!-- Fonts -->
-  {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300&display=swap" rel="stylesheet">
-
-  {{-- <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
   @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
@@ -26,8 +20,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-          {{-- {{ config('app.name', 'Laravel') }} home button --}}
-          <h3>Colorful animals</h3>
+          {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
           <span class="navbar-toggler-icon"></span>
@@ -36,7 +29,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav me-auto">
+
           </ul>
+
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ms-auto">
             <!-- Authentication Links -->
@@ -53,36 +48,19 @@
             </li>
             @endif
             @else
-            @if(Auth::user()->role >9)
-            {{-- pasted code start --}}
             <li class="nav-item dropdown">
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                Colors
+                Accounts
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{route('colors-index')}}">
-                  Colors List
+                <a class="dropdown-item" href="{{ route('accounts-index') }}">
+                  Account List
                 </a>
-                <a class="dropdown-item" href="{{route('colors-create')}}">
-                  New Color
+                <a class="dropdown-item" href="{{ route('accounts-create') }}">
+                  New Account
                 </a>
               </div>
             </li>
-            <li class="nav-item dropdown">
-              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                Animals
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{route('animals-index')}}">
-                  Animals List
-                </a>
-                <a class="dropdown-item" href="{{route('animals-create')}}">
-                  New Animal
-                </a>
-              </div>
-            </li>
-            @endif
-            {{-- end pasted code --}}
             <li class="nav-item dropdown">
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}

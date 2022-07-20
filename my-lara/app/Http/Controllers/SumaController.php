@@ -9,7 +9,6 @@ class SumaController extends Controller
 {
     public function suma(Request $request, $num2 = 0, $num1 = 0)
     {
-        dump($num1 + $num2);
 
         $return =  $num1 + $num2;
 
@@ -27,7 +26,6 @@ class SumaController extends Controller
     public function skaiciuoti(Request $request)
     {
         $result = $request->x - $request->y;
-        dump($result);
         /* intelephense-disable */
         // $request->session()->flash('result', $result);
         /* intelephense-enable */

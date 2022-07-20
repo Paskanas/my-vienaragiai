@@ -70,3 +70,27 @@ h1.nice {
     letter-spacing: 12px;
     font-size: 40px;
 }
+
+.color-box2 {
+    padding: 20px;
+    width: 200px;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    h2 {
+        margin: 0;
+        text-transform: capitalize;
+        letter-spacing: 2px;
+        text-shadow: 1px 1px white;
+        color: black;
+    }
+    i {
+        font-size: 15px;
+        text-shadow: 1px 1px white;
+        color: black;
+        letter-spacing: 1px;
+    }
+}

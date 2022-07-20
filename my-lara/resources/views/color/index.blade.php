@@ -2,6 +2,7 @@
 
 
 @section('content')
+{{Auth::user()->role}}
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-8">
@@ -28,12 +29,14 @@
 
                 <div class="controls">
                   <a class="btn btn-outline-primary m-2" href="{{route('colors-show', $color->id)}}">SHOW</a>
+                  @if(Auth::user()->role >9)
                   <a class="btn btn-outline-success m-2" href="{{route('colors-edit', $color)}}">EDIT</a>
                   <form class="delete" action="{{route('colors-delete', $color)}}" method="post">
                     @csrf
                     @method('delete')
                     <button class="btn btn-outline-primary m-2" type="submit">Destroy</button>
                   </form>
+                  @endif
                 </div>
               </div>
             </li>

@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,5 +41,27 @@ class DatabaseSeeder extends Seeder
                 'title' => $color
             ]);
         }
+
+
+        $animals = ['Big Cat', 'Tiger', 'Puma', 'Penguin', 'Zebro', 'Racoon', 'Donkey', 'Snake', 'Koala', 'Elephant'];
+
+        foreach (range(1, 77) as $_) {
+            DB::table('animals')->insert([
+                'name' => $animals[rand(0, count($animals) - 1)],
+                'color_id' => rand(1, 10)
+            ]);
+        }
+
+        DB::table('users')->insert([
+            'name' => 'Mamutas',
+            'email' => 'mamutas@gmail.com',
+            'password' => Hash::make('123')
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Bebras',
+            'email' => 'bebras@gmail.com',
+            'password' => Hash::make('123'),
+            'role' => 10
+        ]);
     }
 }

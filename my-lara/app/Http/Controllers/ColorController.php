@@ -14,10 +14,10 @@ class ColorController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Display a listing of the resource.
@@ -26,7 +26,6 @@ class ColorController extends Controller
      */
     public function index(Request $request)
     {
-        dump($request->query());
 
         // $colors = Color::all()->sortByDesc('title');
         // $colors = Color::orderBy('title')->get();

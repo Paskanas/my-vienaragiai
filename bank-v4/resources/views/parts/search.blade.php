@@ -1,11 +1,11 @@
 <div class="search">
   @if($accounts->count()>0)
-  <form action="{{route('accounts-index')}}" method="get">
-    <input type="text" name="search">
-    <button type="submit">Search</button>
+  <form class="searchForm" action="{{route('accounts-index')}}" method="get">
+    <input class="form-control short" type="text" name="search">
+    <button class="btn btn-outline-primary ms-2" type="submit">Search</button>
   </form>
   @endif
-  <form class="searchReset" action="{{route('accounts-index')}}" method="get">
-    <button type="submit">Search reset</button>
+  <form action="{{route('accounts-index')}}" method="get">
+    <button class="btn btn-outline-primary ms-2" type="submit">Search reset</button>
   </form>
 </div>
