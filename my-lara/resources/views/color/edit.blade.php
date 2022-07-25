@@ -19,9 +19,9 @@
               </div> --}}
               <div class="form-group">
                 <label for="create_color_input">Color</label>
-                <input class="form-control" type="color" name="create_color_input" value="{{$color->color}}">
+                <input class="form-control" type="color" name="create_color_input" value="{{old('create_color_input',$color->color)}}">
                 <label for="color_title">Color title</label>
-                <input class="form-control" type="text" name="color_title" value="{{$color->title}}">
+                <input class="form-control" type="text" name="color_title" value="{{old('color_title',$color->title)}}">
               </div>
               @csrf
               @method('put')

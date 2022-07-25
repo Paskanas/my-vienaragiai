@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Color;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 // use App\Http\Requests\StoreColorRequest;
 // use App\Http\Requests\UpdateColorRequest;
 
@@ -57,6 +59,22 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'create_color_input' => ['required', 'regex:/^\#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', 'max:64'],
+                'color_title' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'create_color_input.required' => 'Write something!',
+                'create_color_input.min' => 'Too short',
+            ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
         $color = new Color;
         $color->color = $request->create_color_input;
         $color->title = $request->color_title ?? 'no title';

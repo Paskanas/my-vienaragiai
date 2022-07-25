@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalsController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\FrontController as F;
 use App\Http\Controllers\SumaController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +41,8 @@ Route::get('/welcome', function () {
 
 //Front
 Route::get('', [F::class, 'index'])->name('front-index');
+
+Route::post('add-anima-to-cart', [CartController::class, 'add'])->name('front-add');
 
 
 // Colors

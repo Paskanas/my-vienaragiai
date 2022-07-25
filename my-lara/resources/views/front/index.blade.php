@@ -25,10 +25,12 @@
                   <h2>{{$animal->name}}</h2>
                 </div>
                 <div class="controls">
-                  <form class="delete" action="" method="post">
+                  <form class="delete" action="{{route('front-add')}}" method="post">
                     @csrf
-                    @method('delete')
+                    @method('post')
                     <button class="btn btn-outline-warning m-2" type="submit">Want it!</button>
+                    <input class="form-control" type="number" name="animals_count">
+                    <input class="form-control" type="hidden" name="animals_id" value="{{$animal->id}}">
                   </form>
                 </div>
               </div>
