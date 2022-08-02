@@ -23,16 +23,24 @@
                 <div class="color-box2" style="background: {{$animal->color}}">
                   <i>{{$animal->title}}</i>
                   <h2>{{$animal->name}}</h2>
+                  <a href="https://google.lt/search?q={{$animal->name}}+{{$animal->title}}" target='_blank'> Go and see</a>
                 </div>
+                @if(Auth::user()?->role>0)
                 <div class="controls">
-                  <form class="delete" action="{{route('front-add')}}" method="post">
-                    @csrf
-                    @method('post')
-                    <button class="btn btn-outline-warning m-2" type="submit">Want it!</button>
-                    <input class="form-control" type="number" name="animals_count">
-                    <input class="form-control" type="hidden" name="animals_id" value="{{$animal->id}}">
-                  </form>
+                  <div class="container">
+                    <div class="row">
+                      {{-- <form class="delete" action="{{route('front-add')}}" method="post"> --}}
+                      @csrf
+                      @method('post')
+                      <button class="btn btn-outline-warning mt-2 mb-2 add--cart" type="submit">Want it!</button>
+                      <input class="form-control" type="number" name="animals_count">
+                      {{$animal->aid}}
+                      <input class="form-control" type="hidden" name="animals_id" value="{{$animal->aid}}">
+                      {{-- </form> --}}
+                    </div>
+                  </div>
                 </div>
+                @endif
               </div>
             </li>
             @empty

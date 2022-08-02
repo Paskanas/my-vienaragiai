@@ -30,7 +30,7 @@ class FrontController extends Controller
                 ->count();
             $animalsDir = [DB::table('animals')
                 ->join('colors', 'colors.id', '=', 'animals.color_id')
-                ->select('colors.*', 'animals.*')
+                ->select('colors.*', 'animals.*', 'animals.id as aid')
                 ->where('animals.name', 'like', '%' . $w1 . '%')
                 ->where('colors.title', 'like', '%' . $w2 . '%')
                 ->orWhere(fn ($query) => $query->where('animals.name', 'like', '%' . $w2 . '%')->where('colors.title', 'like', '%' . $w1 . '%'))
@@ -46,35 +46,35 @@ class FrontController extends Controller
                 $animalsDir = match ($request->sort) {
                     'color-asc' => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->orderBy('colors.title')
                         ->offset($offset)
                         ->limit($this->itemsInPage)
                         ->get(), 'color-asc'],
                     'color-desc' => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->orderBy('colors.title', 'desc')
                         ->offset($offset)
                         ->limit($this->itemsInPage)
                         ->get(), 'color-desc'],
                     'animals-asc' => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->orderBy('animals.name')
                         ->offset($offset)
                         ->limit($this->itemsInPage)
                         ->get(), 'animals-asc'],
                     'animals-desc' => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->orderBy('animals.name', 'desc')
                         ->offset($offset)
                         ->limit($this->itemsInPage)
                         ->get(), 'animals-desc'],
                     default => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->orderBy('animals.id')
                         ->offset($offset)
                         ->limit($this->itemsInPage)
@@ -83,23 +83,23 @@ class FrontController extends Controller
                 $allCount = match ($request->sort) {
                     'color-asc' => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->count(),
                     'color-desc' => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->count(),
                     'animals-asc' => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->count(),
                     'animals-desc' => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->count(),
                     default => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->orderBy('animals.id')
                         ->count()
                 };
@@ -109,22 +109,22 @@ class FrontController extends Controller
                 $allCount = match ($request->sort) {
                     'color-asc' => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->count(),
                     'color-desc' => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->count(),
                     'animals-asc' => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->count(),
                     'animals-desc' => DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->count(),
                     default => DB::table('animals')
@@ -137,7 +137,7 @@ class FrontController extends Controller
                 $animalsDir = match ($request->sort) {
                     'color-asc' => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->orderBy('colors.title')
                         ->offset($offset)
@@ -145,7 +145,7 @@ class FrontController extends Controller
                         ->get(), 'color-asc'],
                     'color-desc' => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->orderBy('colors.title', 'desc')
                         ->offset($offset)
@@ -153,7 +153,7 @@ class FrontController extends Controller
                         ->get(), 'color-desc'],
                     'animals-asc' => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->orderBy('animals.name')
                         ->offset($offset)
@@ -161,7 +161,7 @@ class FrontController extends Controller
                         ->get(), 'animals-asc'],
                     'animals-desc' => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('colors.*', 'animals.*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->orderBy('animals.name', 'desc')
                         ->offset($offset)
@@ -169,7 +169,7 @@ class FrontController extends Controller
                         ->get(), 'animals-desc'],
                     default => [DB::table('animals')
                         ->join('colors', 'colors.id', '=', 'animals.color_id')
-                        ->select('*')
+                        ->select('colors.*', 'animals.*', 'animals.id as aid')
                         ->where('animals.color_id', '=', $request->color_id)
                         ->orderBy('animals.id')
                         ->offset($offset)

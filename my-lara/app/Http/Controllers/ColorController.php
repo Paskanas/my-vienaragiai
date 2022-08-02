@@ -135,4 +135,9 @@ class ColorController extends Controller
         }
         return redirect()->back()->with('deleted', 'First delete all animals with this color');
     }
+
+    public function link()
+    {
+        abort(403);
+    }
 }

@@ -78,6 +78,11 @@
               <i>{{$animal->getThisAnimalsColor()->first()->title}}</i>
               <h2>{{$animal->name}}</h2>
             </div>
+            @if($animal->photo)
+            <div class="image-box">
+              <img src="{{$animal->photo}}" alt="Animal photo">
+            </div>
+            @endif
             <div class="controls">
               <a class="btn btn-outline-primary m-2" href="{{route('animals-show', $animal->id)}}">SHOW</a>
               <a class="btn btn-outline-primary m-2" href="{{route('animals-edit', $animal)}}">EDIT</a>

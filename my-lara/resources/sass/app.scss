@@ -73,12 +73,12 @@ h1.nice {
 
 .color-box2 {
     padding: 20px;
-    width: 200px;
-    height: 60px;
+    width: 300px;
+    height: auto;
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
     h2 {
         margin: 0;
@@ -92,5 +92,28 @@ h1.nice {
         text-shadow: 1px 1px white;
         color: black;
         letter-spacing: 1px;
+    }
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    b {
+        cursor: pointer;
+        width: 17px;
+        height: 17px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: crimson;
+        border: 1px solid crimson;
+        border-radius: 50%;
     }
 }

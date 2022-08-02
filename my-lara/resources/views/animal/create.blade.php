@@ -42,7 +42,7 @@
           </form>
           </ul> --}}
           {{-- <ul> --}}
-          <form action="{{route('animals-store')}}" method="post">
+          <form action="{{route('animals-store')}}" method="post" enctype="multipart/form-data">
             <label for="animal_name">Animal name</label>
             <input class="form-control" type="text" name="animal_name">
             <label for="color_id">Choose animal color</label>
@@ -51,6 +51,13 @@
               <option value="{{$color->id}}">{{$color->title}}</option>
               @endforeach
             </select>
+            <div class="mt-3">
+              <a class="magic--link" href="">see <span></span></a>
+            </div>
+            <div class="mt-3">
+              <label for="anima_photo">Choose animal photo</label>
+              <input type="file" name="animal_photo">
+            </div>
             @csrf
             <button class="btn btn-outline-primary mt-4" type="submit">Found new animal</button>
           </form>
@@ -60,4 +67,8 @@
     </div>
   </div>
 </div>
+{{-- <script>
+  const showUrl = "{{route('colors-show-route')}}";
+
+</script> --}}
 @endsection

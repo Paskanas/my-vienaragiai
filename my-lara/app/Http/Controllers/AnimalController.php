@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+// require 'vendor/autoload.php';
+
 use App\Models\Animal;
 use App\Models\Color;
 use Illuminate\Http\Request;
+use Image;
 
 class AnimalController extends Controller
 {
@@ -51,8 +54,29 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
         $animal = new Animal;
+
+        if ($request->file('animal_photo')) {
+
+            $photo = $request->file('animal_photo');
+
+            $ext = $photo->getClientOriginalExtension();
+
+            $name = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $file = $name . '-' . rand(100000, 999999) . '.' . $ext;
+
+            $Image = Image::make($photo)->pixelate(12);
+
+            $Image->save(public_path() . '/images' . $file);
+
+            // $photo->move(public_path() . '/images', $file);
+
+            $animal->photo = asset('/images') . '/' . $file;
+        }
+
         $animal->name = $request->animal_name;
         $animal->color_id = $request->color_id;
+
         $animal->save();
         return redirect()->route('colors-index')->with('success', 'Animal created');
     }
@@ -91,6 +115,31 @@ class AnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
+        $name = pathinfo($animal->photo, PATHINFO_FILENAME);
+        $ext = pathinfo($animal->photo, PATHINFO_EXTENSION);
+
+        $path = asset('/images') . '/' . $name . '.' . $ext;
+
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        if ($request->file('animal_photo')) {
+
+            $photo = $request->file('animal_photo');
+
+            $ext = $photo->getClientOriginalExtension();
+
+            $name = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $file = $name . '-' . rand(100000, 999999) . '.' . $ext;
+
+            $photo->move(public_path() . '/images', $file);
+
+            $animal->photo = asset('/images') . '/' . $file;
+        }
+
+
         $animal->name = $request->animal_name;
         $animal->color_id = $request->color_id;
         $animal->save();
@@ -105,7 +154,35 @@ class AnimalController extends Controller
      */
     public function destroy(Animal $animal)
     {
+        if ($animal->photo) {
+            $name = pathinfo($animal->photo, PATHINFO_FILENAME);
+            $ext = pathinfo($animal->photo, PATHINFO_EXTENSION);
+
+            $path = asset('/images') . '/' . $name . '.' . $ext;
+
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
+
         $animal->delete();
         return redirect()->route('animals-index')->with('deleted', 'Successfully deleted');
+    }
+
+
+    public function deletePicture(Animal $animal)
+    {
+        $name = pathinfo($animal->photo, PATHINFO_FILENAME);
+        $ext = pathinfo($animal->photo, PATHINFO_EXTENSION);
+
+        $path = asset('/images') . '/' . $name . '.' . $ext;
+        // dd($path);
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        $animal->photo = null;
+        $animal->save();
+        return redirect()->back()->with('deleted', 'Animal have no photo now');
     }
 }

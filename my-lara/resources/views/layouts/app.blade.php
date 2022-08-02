@@ -19,6 +19,13 @@
 
   {{-- <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+  <script>
+    const showUrl = "{{route('colors-show-route')}}";
+    const addToCartUrl = "{{route('front-add-cart')}}";
+    const mySmallCart = "{{route('my-small-cart')}}";
+
+  </script>
+
   @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
@@ -82,6 +89,22 @@
               </div>
             </li>
             @endif
+            <li class="nav-item dropdown">
+              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                Orders
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                @if(Auth::user()->role >9)
+                <a class="dropdown-item" href="{{route('orders-index')}}">
+                  Orders List
+                </a>
+                @endif
+                <a class="dropdown-item" href="{{route('my-orders')}}">
+                  My orders
+                </a>
+              </div>
+            </li>
+
             {{-- end pasted code --}}
             <li class="nav-item dropdown">
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -99,6 +122,10 @@
                 </form>
               </div>
             </li>
+            <li class="nav-item small--cart">
+
+            </li>
+
             @endguest
           </ul>
         </div>
