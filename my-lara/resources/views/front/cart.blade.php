@@ -29,7 +29,7 @@
     </span>
     @endforelse
     @if ($cart)
-    <form action="" method="post">
+    <form action="{{route('front-add')}}" method="post">
       <button class="btn btn-outline-warning mt-2 mb-2 add--cart" type="submit">Buy it!</button>
       @csrf
     </form>

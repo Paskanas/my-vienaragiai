@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Animal;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,8 @@ class OrderController extends Controller
 
         $order = new Order;
 
-        $order->count = $request->animals_count;
-        $order->animal_id = $request->animals_id;
+        $order->order = json_encode(session()->get('cart', []));
+        session()->put('cart', []);
         $order->user_id = Auth::user()->id;
 
         $order->save();
@@ -29,9 +30,24 @@ class OrderController extends Controller
             ->orderBy('id', 'desc')
             ->get();
 
+        $orders->map(function ($o) {
+            $cart = json_decode($o->order, 1);
+            $ids = array_map(fn ($p) => $p['id'], $cart);
+            $cartCollection = collect([...$cart]);
+
+            $o->animals = Animal::whereIn('id', $ids)->get()->map(function ($a) use ($cartCollection) {
+                $a->count = $cartCollection->first(fn ($e) => $e['id'] === $a->id)['count'];
+                return $a;
+            });
+
+            return $o;
+        });
+
+
+        // dd($orders);
+
         $orders = $orders->map(function ($o) {
             $time = Carbon::create($o->created_at);
-            // dd($time);
             $o->time = $time->format('Y-m-d H:i:s');
             return $o;
         });
@@ -44,7 +60,29 @@ class OrderController extends Controller
     {
         $orders = Order::orderBy('id', 'desc')
             ->get();
-        return view('orders.index', ['orders' => $orders, 'statuses' => Order::STATUSES]);
+
+        $orders->map(function ($o) {
+            $cart = json_decode($o->order, 1);
+            $ids = array_map(fn ($p) => $p['id'], $cart);
+            $cartCollection = collect([...$cart]);
+
+            $o->animals = Animal::whereIn('id', $ids)->get()->map(function ($a) use ($cartCollection) {
+                $a->count = $cartCollection->first(fn ($e) => $e['id'] === $a->id)['count'];
+                return $a;
+            });
+
+            return $o;
+        });
+
+        // dd($orders);
+
+        return view(
+            'orders.index',
+            [
+                'orders' => $orders,
+                'statuses' => Order::STATUSES
+            ]
+        );
     }
 
     public function setStatus(Request $request, Order $order)
