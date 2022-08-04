@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\FrontController as F;
+use App\Http\Controllers\MasterController;
 use App\Http\Controllers\SumaController;
 
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,9 @@ Route::get('', [F::class, 'index'])->name('front-index');
 
 Route::post('add-animal-to-order', [OrderController::class, 'add'])->name('front-add');
 Route::get('my-orders', [OrderController::class, 'showMyOrders'])->name('my-orders');
+Route::get('pdf/{order}', [OrderController::class, 'getPdf'])->name('pdf')->middleware('rp:admin');
+
+
 
 Route::post('add-animal-to-cart', [CartController::class, 'add'])->name('front-add-cart');
 Route::get('my-small-cart', [CartController::class, 'showSmallCart'])->name('my-small-cart');
@@ -55,14 +59,16 @@ Route::prefix('orders')->name('orders-')->group(function () {
 
     Route::get('', [OrderController::class, 'index'])->name('index')->middleware('rp:user');
     Route::put('status/{order}', [OrderController::class, 'setStatus'])->name('status')->middleware('rp:admin');
-    // Route::get('create', [OrderController::class, 'create'])->name('create')->middleware('rp:admin');
-    // Route::post('', [OrderController::class, 'store'])->name('store')->middleware('rp:admin');
-    // Route::get('edit/{color}', [OrderController::class, 'edit'])->name('edit')->middleware('rp:admin');
-    // Route::put('{color}', [OrderController::class, 'update'])->name('update')->middleware('rp:admin');
-    // Route::delete('{color}', [OrderController::class, 'destroy'])->name('delete')->middleware('rp:admin');
-
-    // Route::get('show/{id}', [OrderController::class, 'show'])->name('show')->middleware('rp:user');
 });
+
+// Masters
+Route::prefix('masters')->name('masters-')->group(function () {
+    Route::get('', [MasterController::class, 'index'])->name('index')->middleware('rp:user');
+    Route::get('edit/{master}', [MasterController::class, 'edit'])->name('edit')->middleware('rp:admin');
+    Route::put('{master}', [MasterController::class, 'update'])->name('update')->middleware('rp:admin');
+    Route::delete('{master}', [MasterController::class, 'destroy'])->name('delete')->middleware('rp:admin');
+});
+
 // Colors
 Route::prefix('colors')->name('colors-')->group(function () {
 

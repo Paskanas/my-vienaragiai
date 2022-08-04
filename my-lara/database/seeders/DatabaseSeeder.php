@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $faker = Faker::create();
+        $faker = Faker::create('lt_LT');
 
         $fantasyColors = collect(['crimson', 'pink']);
 
@@ -63,5 +63,26 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123'),
             'role' => 10
         ]);
+
+
+        foreach (range(1, 9) as $_) {
+            DB::table('masters')->insert([
+                'master_name' => $faker->name
+            ]);
+        }
+
+        $skills = [
+            'Belly Dance',
+            'Stroke a Cat',
+            'Eat cake',
+            'Change wheel',
+            'Get angry'
+        ];
+
+        foreach ($skills as $skill) {
+            DB::table('skills')->insert([
+                'skill' => $skill
+            ]);
+        }
     }
 }

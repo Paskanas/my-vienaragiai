@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Animal;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -90,5 +91,22 @@ class OrderController extends Controller
         $order->status = $request->status;
         $order->save();
         return redirect()->back();
+    }
+
+    public function getPdf(Order $order)
+    {
+
+        $cart = json_decode($order->order, 1);
+        $ids = array_map(fn ($p) => $p['id'], $cart);
+        $cartCollection = collect([...$cart]);
+
+        $order->animals = Animal::whereIn('id', $ids)->get()->map(function ($a) use ($cartCollection) {
+            $a->count = $cartCollection->first(fn ($e) => $e['id'] === $a->id)['count'];
+            return $a;
+        });
+
+
+        $pdf = Pdf::loadView('orders.pdf', ['order' => $order]);
+        return $pdf->download('order-' . $order->id . '.pdf');
     }
 }

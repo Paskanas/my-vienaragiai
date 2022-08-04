@@ -21,7 +21,9 @@ const cartUpdate = () => {
 };
 
 window.addEventListener("load", () => {
-    cartUpdate();
+    if (document.querySelector(".small--cart")) {
+        cartUpdate();
+    }
 });
 
 if (document.querySelector(".magic--link")) {

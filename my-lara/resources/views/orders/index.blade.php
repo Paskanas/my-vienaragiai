@@ -42,6 +42,9 @@
                     <div class="col-3">
                       <button type="submit" class="btn btn-outline-info m-4">Set status</button>
                     </div>
+                    <div class="col-3">
+                      <a class="btn btn-outline-success m-4" href="{{route('pdf',$order)}}">Get PDF</a>
+                    </div>
                   </div>
                 </div>
               </form>
